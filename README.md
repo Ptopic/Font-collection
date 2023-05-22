@@ -2,7 +2,7 @@
 
 <h2>Funko pop pikachu collection tracking app app</h2>
 
-👉 Live Demo: <a href='http://www.pikachu-pop.com/'>Live Demo</a>
+👉 Live Demo: <a href=''>Live Demo</a>
 
 <h3>Build with:</h3>
 
