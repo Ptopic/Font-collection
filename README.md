@@ -17,6 +17,7 @@
 <h2>Todo: ✔️</h2>
 <br>
 
+- [ ] Edit error screen component and add cool illustration to it
 - [ ] Add formik form validation
 - [ ] Add image preview button while adding and editing
 - [ ] Add animations to add container
