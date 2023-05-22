@@ -1,0 +1,120 @@
+/* Fonts collection - cards */
+
+.fonts-container {
+    max-width: 75%;
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    grid-auto-rows: 450px;
+    justify-content: center;
+    align-items: center;
+    padding: 12rem 0;
+}
+
+.font-card {
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1/4;
+}
+
+.font-card img {
+    width: 100%;
+    height: 100%;
+}
+
+.font-card a {
+    width: 100%;
+    height: 100%;
+}
+
+.font-card.wide img {
+    width: 100%;
+    height: 100%;
+}
+
+.font-card.wide a {
+    width: 100%;
+    height: 100%;
+}
+
+.font-card.wide {
+    grid-column: 1/5;
+}
+
+.font-card a img:hover {
+    transform: scale(1.05);
+    transition: .4s cubic-bezier(.25, .88, .86, .8);
+    background-color: white;
+}
+
+.font-card a img {
+    transition: .4s cubic-bezier(.25, .88, .86, .8);
+}
+
+.font-card-second-part {
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 4/7;
+}
+
+.font-card-second-part img {
+    width: 100%;
+    height: 100%;
+}
+
+.font-card-second-part.wide {
+    grid-column: 5/7;
+}
+
+.font-card-second-part.wide img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------- Media querys ---------- */
+
+/* Phone */
+
+@media (max-width: 500px) {
+    .fonts-container {
+        max-width: 85%;
+        grid-auto-rows: 200px;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: 200px;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 5rem 0 20rem 0;
+    }
+
+    .font-card {
+        height: 200px;
+        width: 100%;
+        grid-column: 1;
+    }
+
+    .font-card.wide {
+        grid-column: 1;
+    }
+
+    .font-card-second-part {
+        display: none;
+    }
+
+    .font-card-second-part.wide {
+        display: none;
+    }
+
+    .font-card a img:hover {
+        transform: scale(1.00);
+        background-color: white;
+    }
+}

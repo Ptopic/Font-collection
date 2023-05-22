@@ -1,33 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { IoRemove, IoAdd, IoClose } from 'react-icons/io5';
+import { IoRemove, IoAdd, IoClose, IoCheckmarkOutline } from 'react-icons/io5';
 import { FiEdit } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
-import { getFontById, updateFont } from '../utils/fonts';
+import { deleteFontById, getFontById, updateFont } from '../utils/fonts';
+
+import '../index.css';
+import './DbList.css';
 
 function DbItem({ id, name }) {
+	let navigate = useNavigate();
 	const [activeId, setActiveId] = useState('');
 	const [isEdited, setIsEdited] = useState(false);
 	const [isRemoving, setIsRemoving] = useState(false);
-	const [editingData, setEditingData] = useState('');
 
 	const [fontName, setFontName] = useState('');
 	const [image, setImage] = useState('');
 	const [image2, setImage2] = useState('');
 	const [link, setLink] = useState('');
-	const [isWide, setIsWide] = useState('');
-
-	useEffect(() => {
-		console.log(editingData);
-		setFontName(editingData['name']);
-		setImage(editingData['image']);
-		setImage2(editingData['image2']);
-		setLink(editingData['url']);
-		setIsWide(editingData['wide']);
-	}, [editingData]);
+	const [isWide, setIsWide] = useState(0);
 
 	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-
 		// Insert into db
 		const res = await updateFont(
 			activeId,
@@ -40,7 +33,12 @@ function DbItem({ id, name }) {
 		// Close modal
 		setActiveId('');
 		setIsEdited(false);
-		setEditingData('');
+
+		setFontName('');
+		setImage('');
+		setImage2('');
+		setLink('');
+		setIsWide('');
 	};
 
 	const onInputChange = (state, e) => {
@@ -48,13 +46,13 @@ function DbItem({ id, name }) {
 	};
 
 	const onCheckboxChange = (state, e) => {
-		const status = e.target.checked === true ? 1 : 0;
-		setIsWide(status);
+		e.preventDefault();
+		const status = isWide == 1 ? 0 : 1;
+		state(status);
 	};
 
 	const handleEdit = async (e) => {
 		// Set active id to clicked item
-		// console.log(id);
 		setActiveId(id);
 
 		// Open edit modal
@@ -64,7 +62,11 @@ function DbItem({ id, name }) {
 		const fontId = id;
 		const res = await getFontById(fontId);
 		const data = res.data;
-		setEditingData(data[0]);
+		setFontName(data[0]['name']);
+		setImage(data[0]['image']);
+		setImage2(data[0]['image2']);
+		setLink(data[0]['url']);
+		setIsWide(data[0]['wide']);
 	};
 
 	const handleRemove = async (e) => {
@@ -78,70 +80,110 @@ function DbItem({ id, name }) {
 		// Close modal
 		setActiveId('');
 		setIsEdited(false);
-		setEditingData('');
+
+		setFontName('');
+		setImage('');
+		setImage2('');
+		setLink('');
+		setIsWide('');
 	};
 
-	const confirmDelete = () => {
+	const confirmDelete = async () => {
 		// Remove item from db
+		const fontId = id;
+		const res = await deleteFontById(fontId);
+		const data = res.data;
+		console.log(data);
+		// exit delete modal
 		setIsRemoving(false);
+		// Redirect back to same page to force a refresh
+		navigate(0);
 	};
 
 	const cancelDelete = () => {
+		// exit delete modal
 		setIsRemoving(false);
 	};
 	return (
 		<>
 			{isRemoving && (
 				<div className="removing-container-overlay">
-					<div className="removing-container">
-						Are you sure you want to remove that item?
-						<div className="removing-container-buttons">
-							<button onClick={() => confirmDelete()}>Confirm</button>
-							<button onClick={() => cancelDelete()}>Cancel</button>
+					<div className="removing-content">
+						<p>Are you sure you want to remove that item?</p>
+						<div className="content-buttons">
+							<button
+								onClick={() => confirmDelete()}
+								className="main-button confirm"
+							>
+								Confirm
+							</button>
+							<button onClick={() => cancelDelete()} className="main-button">
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>
 			)}
 			{isEdited && (
 				<div className="editing-container-overlay">
-					<button onClick={() => handleClose()}>
-						<IoClose size={32} />
-					</button>
 					<div className="editing-container">
-						<form className="editing-content" onSubmit={onSubmitHandler}>
+						<form className="content" onSubmit={onSubmitHandler}>
+							<button
+								onClick={() => handleClose()}
+								className="action-button close"
+							>
+								<IoClose size={28} />
+							</button>
+							<label>Font name</label>
 							<input
 								type="text"
 								name="name"
-								defaultValue={editingData['name']}
+								defaultValue={name}
 								onChange={(e) => onInputChange(setFontName, e)}
+								autoComplete="off"
 							/>
 							{/* <img src={editingData['image']} alt="" /> */}
+							<label>Font image (left)</label>
 							<input
 								type="text"
 								name="image"
-								defaultValue={editingData['image']}
+								defaultValue={image}
 								onChange={(e) => onInputChange(setImage, e)}
+								autoComplete="off"
 							/>
 							{/* <img src={editingData['image2']} alt="" /> */}
+							<label>Font image (right)</label>
 							<input
 								type="text"
 								name="image2"
-								defaultValue={editingData['image2']}
+								defaultValue={image2}
 								onChange={(e) => onInputChange(setImage2, e)}
+								autoComplete="off"
 							/>
+							<label>Link</label>
 							<input
 								type="text"
 								name="link"
-								defaultValue={editingData['url']}
+								defaultValue={link}
 								onChange={(e) => onInputChange(setLink, e)}
+								autoComplete="off"
 							/>
 							<div className="checkbox">
-								<input
+								{/* <input
 									type="checkbox"
 									name="wide"
-									defaultChecked={editingData['wide'] === 1 ? true : false}
+									// value={isWide}
+									defaultChecked={isWide == 1 ? 'checked' : ''}
 									onChange={(e) => onCheckboxChange(setIsWide, e)}
-								/>
+								/> */}
+
+								<button
+									className={isWide == 1 ? 'button checked' : 'button'}
+									onClick={(e) => onCheckboxChange(setIsWide, e)}
+								>
+									{isWide == 1 ? <IoCheckmarkOutline size={24} /> : ''}
+								</button>
+
 								<label>Is wide</label>
 							</div>
 
@@ -152,10 +194,13 @@ function DbItem({ id, name }) {
 			)}
 			<div className="dbitem">{name}</div>
 			<div className="buttons-container">
-				<button className="edit" onClick={(e) => handleEdit(e)}>
+				<button className="edit action-button" onClick={(e) => handleEdit(e)}>
 					<FiEdit size={26} className="editIcon" />
 				</button>
-				<button className="remove" onClick={(e) => handleRemove(e)}>
+				<button
+					className="remove action-button"
+					onClick={(e) => handleRemove(e)}
+				>
 					<IoRemove size={26} className="removeIcon" />
 				</button>
 			</div>

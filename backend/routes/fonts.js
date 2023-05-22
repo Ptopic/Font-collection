@@ -5,6 +5,7 @@ const {
 	getFontById,
 	updateFonts,
 	insertFonts,
+	deleteFontById,
 } = require('../controllers/fonts');
 
 router.get('/get-fonts', getFonts, (req, res) => {
@@ -16,6 +17,7 @@ router.get('/get-font', getFontById, (req, res) => {
 });
 
 router.post('/update-font', updateFonts);
+router.post('/delete-font', deleteFontById);
 router.post('/insert-font', insertFonts);
 
 module.exports = router;

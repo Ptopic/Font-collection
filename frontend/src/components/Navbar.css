@@ -1,0 +1,106 @@
+/* Navbar */
+
+.navbar {
+    font-size: 1.4rem;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 22rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+}
+
+.navbar a {
+    color: #000;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.right-container ul li {
+    display: block;
+    float: left;
+    padding-right: 4rem;
+}
+
+.right-container ul li a {
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.navbar-mobile {
+    display: none;
+}
+
+/* ---------- Media querys ---------- */
+
+/* Phone */
+
+@media (max-width: 500px) {
+    .navbar {
+        display: none;
+    }
+
+    .left-container {
+        display: none;
+    }
+
+    .right-container {
+        display: none;
+    }
+
+    .navbar-mobile {
+        font-size: 1.4rem;
+        color: #000;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 2rem;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 2000;
+    }
+
+    .navbar-button button {
+        outline: none;
+        border: none;
+        color: black;
+        background: none;
+    }
+
+    .navbar-mobile-container {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100dvh;
+        transition: .5s all ease-in-out;
+    }
+
+    .navbar-mobile-container .home {
+        text-decoration: none;
+        font-size: 3rem;
+        padding: 4rem;
+        color: black;
+    }
+
+    .navbar-mobile-container .manage {
+        text-decoration: none;
+        font-size: 3rem;
+        padding: 4rem;
+        color: black;
+    }
+}

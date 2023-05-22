@@ -8,6 +8,17 @@ const catchError = (error) => {
 	}
 };
 
+export const deleteFontById = async (fontId) => {
+	try {
+		const { data } = await client.post('/fonts/delete-font', {
+			id: fontId,
+		});
+		return data;
+	} catch (error) {
+		return catchError(error);
+	}
+};
+
 export const getFontById = async (fontId) => {
 	try {
 		const { data } = await client.get('/fonts/get-font', {

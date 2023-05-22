@@ -17,7 +17,8 @@
 <h2>Todo: ✔️</h2>
 <br>
 
-<!-- - [ ] Add carousel for collection
-- [ ] Add animations for cards -->
+- [ ] Add formik form validation
+- [ ] Add image preview button while adding and editing
+- [ ] Add animations to add container
 
 <br>

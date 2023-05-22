@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import '../index.css';
+import './Home.css';
+
 function Home() {
 	gsap.registerPlugin(ScrollTrigger);
 	const ref = useRef(null);
@@ -21,7 +24,7 @@ function Home() {
 				<h1 className="section-header">Fonts:</h1>
 			</div>
 
-			<Fonts forwardedRef={ref}/>
+			<Fonts forwardedRef={ref} />
 		</div>
 	);
 }

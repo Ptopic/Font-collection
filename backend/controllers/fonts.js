@@ -40,14 +40,35 @@ exports.getFontById = async (req, res) => {
 	});
 };
 
+exports.deleteFontById = async (req, res) => {
+	const { id } = req.body;
+	const selectFigures = `DELETE FROM fonts WHERE id = ${id}`;
+
+	db.query(selectFigures, async (err, result) => {
+		if (err || result.length < 1) {
+			console.log(err);
+			return res.status(400).send({
+				success: false,
+				error: 'Font not found :(',
+			});
+		} else {
+			return res.status(200).send({
+				success: true,
+				message: 'Font deleted',
+			});
+		}
+	});
+};
+
 exports.insertFonts = async (req, res) => {
 	const { id } = req.body;
 	const { name } = req.body;
 	const { image } = req.body;
 	const { image2 } = req.body;
 	const { link } = req.body;
+	const { isWide } = req.body;
 
-	const insertQuery = `INSERT INTO fonts (id, name, image, link) VALUES ("${id}", '${name}', '${image}', '${link}')`;
+	const insertQuery = `INSERT INTO fonts (id, name, image, image2, url, wide) VALUES ("${id}", '${name}', '${image}', '${image2}', '${link}', '${isWide}')`;
 
 	db.query(insertQuery, (err, result) => {
 		if (err) {

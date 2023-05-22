@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import '../index.css';
+import './Fonts.css';
+
 function Card({ id, image, image2, link, isWide }) {
 	return (
 		<>

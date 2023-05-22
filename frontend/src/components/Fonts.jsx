@@ -7,16 +7,24 @@ import { getFonts, updateFont } from '../utils/fonts';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import Spinner from './Spinner';
+
+import '../index.css';
+import './Fonts.css';
+
 function Fonts({ forwardedRef }) {
 	gsap.registerPlugin(ScrollTrigger);
 
 	const [data, setData] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
 		const getData = async () => {
+			setIsLoading(true);
 			const res = await getFonts();
 			const data = res.data;
 			setData(data);
 			console.log(data);
+			setIsLoading(false);
 		};
 		getData();
 
@@ -95,33 +103,26 @@ function Fonts({ forwardedRef }) {
 		});
 	}, [data]);
 	return (
-		<div className="fonts-container">
-			{data.map((card, index) => {
-				return (
-					<Card
-						key={index}
-						image={card.image}
-						image2={card.image2}
-						link={card.link}
-						isWide={card.wide === 1 ? true : false}
-						forwardedRef={forwardedRef}
-					/>
-				);
-			})}
-			{/* <Card
-				key={1}
-				image={
-					'https://images.squarespace-cdn.com/content/v1/63d31edbc3c1e6324267c78e/3e4b2ad8-d161-4af6-8d9b-c905e77388be/xillian-font-5.jpg?format=750w'
-				}
-				image2={
-					'https://images.squarespace-cdn.com/content/v1/63d31edbc3c1e6324267c78e/dbce1160-754b-4639-b8db-7fba37b99af8/Xillian-Font-3.jpg?format=750w'
-				}
-				link={'https://www.fontfabric.com/fonts/mont-blanc/'}
-				forwardedRef={forwardedRef}
-				// isWide={true}
-			/>
-			 */}
-		</div>
+		<>
+			{isLoading ? (
+				<Spinner size={150} />
+			) : (
+				<div className="fonts-container">
+					{data.map((card, index) => {
+						return (
+							<Card
+								key={index}
+								image={card.image}
+								image2={card.image2}
+								link={card.url}
+								isWide={card.wide === 1 ? true : false}
+								forwardedRef={forwardedRef}
+							/>
+						);
+					})}
+				</div>
+			)}
+		</>
 	);
 }
 
