@@ -1,0 +1,314 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 10px;
+}
+
+/* Navbar */
+
+.navbar {
+  font-size: 1.4rem;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 22rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+.navbar a {
+  color: #000;
+}
+
+.navbar ul {
+  list-style: none;
+}
+
+.right-container ul li {
+  display: block;
+  float: left;
+  padding-right: 4rem;
+}
+
+.right-container ul li a {
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+/* Header */
+
+.header-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.6rem;
+}
+
+/* Section start */
+
+.section-start {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.section-start.manage {
+  padding: 12rem 0;
+}
+
+.section-header {
+  font-size: 2.2rem;
+}
+
+/* Fonts collection - cards */
+
+.fonts-container {
+  max-width: 75%;
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  grid-auto-rows: 450px;
+  justify-content: center;
+  align-items: center;
+  padding: 12rem 0;
+}
+
+.font-card {
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1/4;
+}
+
+.font-card img {
+  width: 100%;
+  height: 100%;
+}
+
+.font-card a {
+  width: 100%;
+  height: 100%;
+}
+
+.font-card.wide img {
+  width: 100%;
+  height: 100%;
+}
+
+.font-card.wide a {
+  width: 100%;
+  height: 100%;
+}
+
+.font-card.wide {
+  grid-column: 1/5;
+}
+
+.font-card a img:hover {
+  transform: scale(1.05);
+  transition: .4s cubic-bezier(.25, .88, .86, .8);
+  /* background-color: white;
+  */
+}
+
+.font-card a img {
+  transition: .4s cubic-bezier(.25, .88, .86, .8);
+}
+
+.font-card-second-part {
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 4/7;
+}
+
+.font-card-second-part img {
+  width: 100%;
+  height: 100%;
+}
+
+.font-card-second-part.wide {
+  grid-column: 5/7;
+}
+
+.font-card-second-part.wide img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Db items list ---------- */
+
+.dblist-container {
+  max-width: 75%;
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  padding: 0 10rem;
+}
+
+.dbitem {
+  font-size: 1.8rem;
+  grid-column: 1/6;
+}
+
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  grid-column: 6/7;
+}
+
+.edit {
+  margin-right: 2rem;
+  outline: none;
+  border: none;
+}
+
+.editIcon {}
+
+.remove {}
+
+.removeIcon {}
+
+.add-container {
+  width: 100%;
+  margin: 12rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-container button {
+  outline: none;
+  border: none;
+  font-size: 2.4rem;
+  padding: .5rem 2rem;
+  border-radius: 1.4rem;
+  transition: .2s all ease-in-out;
+}
+
+.add-container button:hover {
+  background-color: #333;
+  color: white;
+  transition: .2s all ease-in-out;
+}
+
+.editing-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removing-container-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.removing-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.removing-container-buttons {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.removing-container-buttons button {
+  width: 40%;
+  margin: auto;
+}
+
+.editing-container-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.editing-content {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editing-content input {
+  margin: 1.2rem;
+}
+
+.editing-content input[type="text"] {
+  border: none;
+  outline: none;
+}
+
+.checkbox input[type="checkbox"] {
+  transform: scale(1.8);
+}
+
+.checkbox label {
+  font-size: 1.4rem;
+}
+
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Media querys ---------- */
+
+/* Phone */
+
+@media (max-width: 500px) {
+  .fonts-container {
+    grid-template-columns: 3fr;
+  }
+
+  /* .font-card {
+    grid-column: 1;
+  }
+
+  .font-card-second-part {
+    grid-column: 1;
+  } */
+}
