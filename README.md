@@ -17,6 +17,8 @@
 <h2>Todo: ✔️</h2>
 <br>
 
+- [ ] Replace add form shown with opacity then animate that opacity and other elements
+- [ ] Host on renderer and netlify
 - [ ] Edit error screen component and add cool illustration to it
 - [ ] Add formik form validation
 - [ ] Add image preview button while adding and editing
