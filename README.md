@@ -1,6 +1,6 @@
 <div align='center'><img style="width:20%"></div>
 
-<h2>Funko pop pikachu collection tracking app app</h2>
+<h2>Font collection tracking app</h2>
 
 👉 Live Demo: <a href=''>Live Demo</a>
 
