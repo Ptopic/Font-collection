@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getFonts, insertFont } from '../utils/fonts';
 
-import Spinner from './Spinner';
+// import Spinner from './Spinner';
 
 // Animations
 import {
@@ -154,7 +154,24 @@ function DbList({ forwardedRef }) {
 					</div>
 				</div>
 			)}
-			{isLoading ? (
+
+			{data ? (
+				<div className="dblist-container">
+					{data.map((el, index) => {
+						return <DbItem name={el.name} id={el.id} key={el.id} />;
+					})}
+				</div>
+			) : (
+				<div className="container" style={{ fontSize: '2rem' }}>
+					No items in database
+				</div>
+			)}
+			<div className="add-container">
+				<button className="main-button add" onClick={() => handleAdd()}>
+					<IoAdd />
+				</button>
+			</div>
+			{/* {isLoading ? (
 				<Spinner size={150} />
 			) : (
 				<>
@@ -175,7 +192,7 @@ function DbList({ forwardedRef }) {
 						</button>
 					</div>
 				</>
-			)}
+			)} */}
 		</>
 	);
 }
