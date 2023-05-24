@@ -7,7 +7,7 @@ import { getFonts, updateFont } from '../utils/fonts';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import Spinner from './Spinner';
+// import Spinner from './Spinner';
 
 import '../index.css';
 import './Fonts.css';
@@ -104,8 +104,22 @@ function Fonts({ forwardedRef }) {
 	}, [data]);
 	return (
 		<>
-			{isLoading ? (
-				<Spinner size={150} />
+			<div className="fonts-container">
+				{data.map((card, index) => {
+					return (
+						<Card
+							key={index}
+							image={card.image}
+							image2={card.image2}
+							link={card.url}
+							isWide={card.wide === 1 ? true : false}
+							forwardedRef={forwardedRef}
+						/>
+					);
+				})}
+			</div>
+			{/* {isLoading ? (
+				// <Spinner size={150} />
 			) : (
 				<div className="fonts-container">
 					{data.map((card, index) => {
@@ -121,7 +135,7 @@ function Fonts({ forwardedRef }) {
 						);
 					})}
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }
