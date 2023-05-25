@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { IoRemove, IoAdd, IoClose, IoCheckmarkOutline } from 'react-icons/io5';
 import { FiEdit } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteFontById, getFontById, updateFont } from '../utils/fonts';
 
+import {
+	openEditModalAnimation,
+	editinputFieldsTimeline,
+} from '../utils/Animations';
+
 import '../index.css';
 import './DbList.css';
 
 function DbItem({ id, name }) {
 	let navigate = useNavigate();
+	const editContainerRef = useRef(null);
+	const editFormRef = useRef(null);
+	const timeline = useRef(null);
 	const [activeId, setActiveId] = useState('');
 	const [isEdited, setIsEdited] = useState(false);
 	const [isRemoving, setIsRemoving] = useState(false);
@@ -58,6 +66,10 @@ function DbItem({ id, name }) {
 		// Open edit modal
 		setIsEdited(true);
 
+		// Trigger container animation
+		const element = editContainerRef.current;
+		openEditModalAnimation(element);
+
 		// Fetch font with that id and put data into form
 		const fontId = id;
 		const res = await getFontById(fontId);
@@ -67,6 +79,9 @@ function DbItem({ id, name }) {
 		setImage2(data[0]['image2']);
 		setLink(data[0]['url']);
 		setIsWide(data[0]['wide']);
+
+		// Trigger animation
+		editinputFieldsTimeline(editFormRef, timeline);
 	};
 
 	const handleRemove = async (e) => {
@@ -124,74 +139,85 @@ function DbItem({ id, name }) {
 					</div>
 				</div>
 			)}
-			{isEdited && (
-				<div className="editing-container-overlay">
-					<div className="editing-container">
-						<form className="content" onSubmit={onSubmitHandler}>
+
+			<div
+				className={
+					isEdited
+						? 'editing-container-overlay'
+						: 'editing-container-overlay hidden'
+				}
+			>
+				<div
+					ref={editContainerRef}
+					className={
+						isEdited ? 'editing-container' : 'editing-container hidden'
+					}
+				>
+					<form
+						className="content"
+						onSubmit={onSubmitHandler}
+						ref={editFormRef}
+					>
+						<button
+							onClick={() => handleClose()}
+							className="action-button close"
+						>
+							<IoClose size={28} />
+						</button>
+						<label className="name">Font name</label>
+						<input
+							className="input-name"
+							type="text"
+							name="name"
+							defaultValue={name}
+							onChange={(e) => onInputChange(setFontName, e)}
+							autoComplete="off"
+						/>
+						{/* <img src={editingData['image']} alt="" /> */}
+						<label className="image">Font image (left)</label>
+						<input
+							className="input-image"
+							type="text"
+							name="image"
+							defaultValue={image}
+							onChange={(e) => onInputChange(setImage, e)}
+							autoComplete="off"
+						/>
+						{/* <img src={editingData['image2']} alt="" /> */}
+						<label className="image2">Font image (right)</label>
+						<input
+							className="input-image2"
+							type="text"
+							name="image2"
+							defaultValue={image2}
+							onChange={(e) => onInputChange(setImage2, e)}
+							autoComplete="off"
+						/>
+						<label className="link">Link</label>
+						<input
+							className="input-link"
+							type="text"
+							name="link"
+							defaultValue={link}
+							onChange={(e) => onInputChange(setLink, e)}
+							autoComplete="off"
+						/>
+						<div className="checkbox">
 							<button
-								onClick={() => handleClose()}
-								className="action-button close"
+								className={isWide == 1 ? 'button checked' : 'button'}
+								onClick={(e) => onCheckboxChange(setIsWide, e)}
 							>
-								<IoClose size={28} />
+								{isWide == 1 ? <IoCheckmarkOutline size={24} /> : ''}
 							</button>
-							<label>Font name</label>
-							<input
-								type="text"
-								name="name"
-								defaultValue={name}
-								onChange={(e) => onInputChange(setFontName, e)}
-								autoComplete="off"
-							/>
-							{/* <img src={editingData['image']} alt="" /> */}
-							<label>Font image (left)</label>
-							<input
-								type="text"
-								name="image"
-								defaultValue={image}
-								onChange={(e) => onInputChange(setImage, e)}
-								autoComplete="off"
-							/>
-							{/* <img src={editingData['image2']} alt="" /> */}
-							<label>Font image (right)</label>
-							<input
-								type="text"
-								name="image2"
-								defaultValue={image2}
-								onChange={(e) => onInputChange(setImage2, e)}
-								autoComplete="off"
-							/>
-							<label>Link</label>
-							<input
-								type="text"
-								name="link"
-								defaultValue={link}
-								onChange={(e) => onInputChange(setLink, e)}
-								autoComplete="off"
-							/>
-							<div className="checkbox">
-								{/* <input
-									type="checkbox"
-									name="wide"
-									// value={isWide}
-									defaultChecked={isWide == 1 ? 'checked' : ''}
-									onChange={(e) => onCheckboxChange(setIsWide, e)}
-								/> */}
 
-								<button
-									className={isWide == 1 ? 'button checked' : 'button'}
-									onClick={(e) => onCheckboxChange(setIsWide, e)}
-								>
-									{isWide == 1 ? <IoCheckmarkOutline size={24} /> : ''}
-								</button>
+							<label>Is wide</label>
+						</div>
 
-								<label>Is wide</label>
-							</div>
-
-							<input type="submit" value="Submit" />
-						</form>
-					</div>
+						<input type="submit" value="Submit" />
+					</form>
 				</div>
-			)}
+			</div>
+
 			<div className="dbitem">{name}</div>
 			<div className="buttons-container">
 				<button className="edit action-button" onClick={(e) => handleEdit(e)}>

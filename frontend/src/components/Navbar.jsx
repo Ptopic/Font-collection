@@ -9,6 +9,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import '../index.css';
 import './Navbar.css';
+import {
+	navbarLogoFlyIn,
+	homeFlyIn,
+	manageFlyIn,
+	navbarScrollAnimation,
+	navbarScrollAnimationMobile,
+	headerFlyIn,
+} from '../utils/Animations';
 
 function Navbar({ forwardedRef }) {
 	const [opened, setOpened] = useState(false);
@@ -18,97 +26,18 @@ function Navbar({ forwardedRef }) {
 	useEffect(() => {
 		const element = forwardedRef.current;
 
-		// console.log(element.querySelector('.home'));
-		gsap.fromTo(
-			// Elements fly in animation
-			element.querySelector('.left-container'),
-			{
-				opacity: 0,
-				y: -50,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				duration: 1.2,
-			}
-		);
+		navbarLogoFlyIn(element);
 		// Home fly in
-		gsap.fromTo(
-			element.querySelector('.home'),
-			{
-				opacity: 0,
-				y: -50,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				delay: 0.8,
-				duration: 1.2,
-			}
-		);
+		homeFlyIn(element);
 		// Manage fly in
-		gsap.fromTo(
-			element.querySelector('.manage'),
-			{
-				opacity: 0,
-				y: -50,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				delay: 1.6,
-				duration: 1.2,
-			}
-		);
+		manageFlyIn(element);
 
 		// Header fly in
-		gsap.fromTo(
-			element.querySelector('.header-container'),
-			{
-				opacity: 0,
-				y: -50,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				delay: 1.6,
-				duration: 1.2,
-			}
-		);
+		headerFlyIn(element);
 
-		gsap.fromTo(
-			// Scroll animation
-			element.querySelector('.navbar'),
-			{
-				background: 'none',
-			},
-			{
-				background: 'white',
-				scrollTrigger: {
-					trigger: element.querySelector('.section-start'),
-					start: 'top center',
-					end: 'bottom top',
-					scrub: true,
-				},
-			}
-		);
-
-		gsap.fromTo(
-			// Scroll animation
-			element.querySelector('.navbar-mobile'),
-			{
-				background: 'none',
-			},
-			{
-				background: 'white',
-				scrollTrigger: {
-					trigger: element.querySelector('.section-start'),
-					start: 'top center',
-					end: 'bottom top',
-					scrub: true,
-				},
-			}
-		);
+		// Navbar scroll animations
+		navbarScrollAnimation(element);
+		navbarScrollAnimationMobile(element);
 	}, []);
 
 	const onPress = () => {

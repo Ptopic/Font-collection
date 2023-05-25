@@ -11,6 +11,11 @@ import Spinner from './Spinner';
 
 import '../index.css';
 import './Fonts.css';
+import {
+	fontsHeaderTextFlyIn,
+	leftImageFlyIn,
+	rightImageFlyIn,
+} from '../utils/Animations';
 
 function Fonts({ forwardedRef }) {
 	gsap.registerPlugin(ScrollTrigger);
@@ -29,26 +34,7 @@ function Fonts({ forwardedRef }) {
 		getData();
 
 		// Fly header text fly in
-		const element = forwardedRef.current;
-
-		gsap.fromTo(
-			// Elements fly in animation
-			element.querySelector('.section-start'),
-			{
-				opacity: 0,
-				y: -50,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.9,
-				scrollTrigger: {
-					trigger: element.querySelector('.section-start'),
-					start: 'top center',
-					end: 'buttom center',
-				},
-			}
-		);
+		fontsHeaderTextFlyIn(forwardedRef);
 	}, []);
 
 	useEffect(() => {
@@ -56,24 +42,7 @@ function Fonts({ forwardedRef }) {
 		const elements = gsap.utils.toArray('.font-card');
 		console.log(elements);
 		elements.forEach((el) => {
-			gsap.fromTo(
-				el,
-				{
-					opacity: 0,
-					x: -150,
-				},
-				{
-					duration: 1,
-					x: 0,
-					opacity: 1,
-					scrollTrigger: {
-						trigger: el,
-						start: 'top center',
-						toggleActions: 'play none none reverse',
-						end: 'top center',
-					},
-				}
-			);
+			leftImageFlyIn(el);
 		});
 
 		// Right images
@@ -81,25 +50,7 @@ function Fonts({ forwardedRef }) {
 		const elementsRight = gsap.utils.toArray('.font-card-second-part');
 
 		elementsRight.forEach((el) => {
-			gsap.fromTo(
-				el,
-				{
-					opacity: 0,
-					x: 150,
-				},
-				{
-					duration: 1,
-					x: 0,
-					opacity: 1,
-					scrollTrigger: {
-						trigger: el,
-						start: 'top center',
-						toggleActions: 'play none none reverse',
-						end: 'top center',
-					},
-					delay: 0.4,
-				}
-			);
+			rightImageFlyIn(el);
 		});
 	}, [data]);
 	return (

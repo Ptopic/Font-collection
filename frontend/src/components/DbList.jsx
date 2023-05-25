@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import DbItem from './DbItem';
 import { IoRemove, IoAdd, IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import { gsap } from 'gsap';
 
 import { getFonts, insertFont } from '../utils/fonts';
 
@@ -12,6 +13,9 @@ import {
 	dbListHeaderAnimation,
 	dbListAnimation,
 	dbListAddAnimation,
+	openAddModalAnimation,
+	flyInAddHeader,
+	inputFieldsTimeline,
 } from '../utils/Animations';
 import '../index.css';
 import './DbList.css';
@@ -19,6 +23,8 @@ import './DbList.css';
 function DbList({ forwardedRef }) {
 	const navigate = useNavigate();
 	const addMenuRef = useRef(null);
+	const addFormRef = useRef(null);
+	const timeline = useRef(null);
 	const [data, setData] = useState([]);
 	const [addingData, setAddingData] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
@@ -80,11 +86,15 @@ function DbList({ forwardedRef }) {
 
 	const handleAdd = async () => {
 		setAddingData(true);
-
+		const element = forwardedRef.current;
+		openAddModalAnimation(element);
+		flyInAddHeader(element);
+		inputFieldsTimeline(addFormRef, timeline);
 		autoIdIncrement();
 	};
 
 	const onHandleSubmit = async (e) => {
+		e.preventDefault();
 		// Insert into db
 		const res = await insertFont(id, fontName, image, image2, link, isWide);
 		console.log(res);
@@ -93,67 +103,82 @@ function DbList({ forwardedRef }) {
 	};
 	return (
 		<>
-			{addingData && (
-				<div className="adding-container-overlay">
-					<div className="adding-container" ref={addMenuRef}>
-						<form className="content" onSubmit={onHandleSubmit}>
-							<button
-								onClick={() => handleClose()}
-								className="action-button close"
-							>
-								<IoClose size={28} />
-							</button>
-							<div className="adding-header">
-								<p>Add font</p>
-							</div>
-							<label className="adding-id">Id</label>
-							<input
-								type="text"
-								name="id"
-								defaultValue={id}
-								onChange={(e) => onInputChange(setId, e)}
-								autoComplete="off"
-							/>
-							<label className="adding-name">Font name</label>
-							<input
-								type="text"
-								name="name"
-								defaultValue={name}
-								onChange={(e) => onInputChange(setFontName, e)}
-								autoComplete="off"
-							/>
-							{/* <img src={editingData['image']} alt="" /> */}
-							<label className="adding-image">Font image (left)</label>
-							<input
-								type="text"
-								name="image"
-								defaultValue={image}
-								onChange={(e) => onInputChange(setImage, e)}
-								autoComplete="off"
-							/>
-							{/* <img src={editingData['image2']} alt="" /> */}
-							<label className="adding-image2">Font image (right)</label>
-							<input
-								type="text"
-								name="image2"
-								defaultValue={image2}
-								onChange={(e) => onInputChange(setImage2, e)}
-								autoComplete="off"
-							/>
-							<label className="adding-link">Link</label>
-							<input
-								type="text"
-								name="link"
-								defaultValue={link}
-								onChange={(e) => onInputChange(setLink, e)}
-								autoComplete="off"
-							/>
+			<div
+				className={
+					addingData
+						? 'adding-container-overlay'
+						: 'adding-container-overlay hidden'
+				}
+			>
+				<div
+					className={
+						addingData ? 'adding-container' : 'adding-container hidden'
+					}
+					ref={addMenuRef}
+				>
+					<form className="content" onSubmit={onHandleSubmit} ref={addFormRef}>
+						<button
+							type="button"
+							onClick={() => handleClose()}
+							className="action-button close"
+						>
+							<IoClose size={28} />
+						</button>
+						<div className="adding-header">
+							<p>Add font</p>
+						</div>
+						<label className="id">Id</label>
+						<input
+							className="input-id"
+							type="text"
+							name="id"
+							defaultValue={id}
+							onChange={(e) => onInputChange(setId, e)}
+							autoComplete="off"
+						/>
+						<label className="name">Font name</label>
+						<input
+							className="input-name"
+							type="text"
+							name="name"
+							defaultValue={name}
+							onChange={(e) => onInputChange(setFontName, e)}
+							autoComplete="off"
+						/>
+						{/* <img src={editingData['image']} alt="" /> */}
+						<label className="image">Font image (left)</label>
+						<input
+							className="input-image"
+							type="text"
+							name="image"
+							defaultValue={image}
+							onChange={(e) => onInputChange(setImage, e)}
+							autoComplete="off"
+						/>
+						{/* <img src={editingData['image2']} alt="" /> */}
+						<label className="image2">Font image (right)</label>
+						<input
+							className="input-image2"
+							type="text"
+							name="image2"
+							defaultValue={image2}
+							onChange={(e) => onInputChange(setImage2, e)}
+							autoComplete="off"
+						/>
+						<label className="link">Link</label>
+						<input
+							className="input-link"
+							type="text"
+							name="link"
+							defaultValue={link}
+							onChange={(e) => onInputChange(setLink, e)}
+							autoComplete="off"
+						/>
 
-							<input type="submit" value="Submit" />
-						</form>
-					</div>
+						<input type="submit" value="Submit" />
+					</form>
 				</div>
-			)}
+			</div>
 
 			{isLoading ? (
 				<Spinner size={150} />
