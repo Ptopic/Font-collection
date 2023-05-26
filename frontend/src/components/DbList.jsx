@@ -66,8 +66,8 @@ function DbList({ forwardedRef }) {
 	};
 
 	useEffect(() => {
-		dbListHeaderAnimation(forwardedRef);
 		getData();
+		dbListHeaderAnimation(forwardedRef);
 	}, []);
 
 	// Item animation

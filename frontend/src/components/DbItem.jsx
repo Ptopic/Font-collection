@@ -29,7 +29,9 @@ function DbItem({ id, name }) {
 	const [isWide, setIsWide] = useState(0);
 
 	const onSubmitHandler = async (e) => {
+		e.preventDefault();
 		// Insert into db
+		console.log(isWide);
 		const res = await updateFont(
 			activeId,
 			fontName,
@@ -38,6 +40,8 @@ function DbItem({ id, name }) {
 			link,
 			isWide
 		);
+		console.log(res);
+
 		// Close modal
 		setActiveId('');
 		setIsEdited(false);
@@ -56,20 +60,11 @@ function DbItem({ id, name }) {
 	const onCheckboxChange = (state, e) => {
 		e.preventDefault();
 		const status = isWide == 1 ? 0 : 1;
+		console.log(status);
 		state(status);
 	};
 
 	const handleEdit = async (e) => {
-		// Set active id to clicked item
-		setActiveId(id);
-
-		// Open edit modal
-		setIsEdited(true);
-
-		// Trigger container animation
-		const element = editContainerRef.current;
-		openEditModalAnimation(element);
-
 		// Fetch font with that id and put data into form
 		const fontId = id;
 		const res = await getFontById(fontId);
@@ -79,6 +74,16 @@ function DbItem({ id, name }) {
 		setImage2(data[0]['image2']);
 		setLink(data[0]['url']);
 		setIsWide(data[0]['wide']);
+
+		// Set active id to clicked item
+		setActiveId(id);
+
+		// Open edit modal
+		setIsEdited(true);
+
+		// Trigger container animation
+		const element = editContainerRef.current;
+		openEditModalAnimation(element);
 
 		// Trigger animation
 		editinputFieldsTimeline(editFormRef, timeline);
