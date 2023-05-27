@@ -55,6 +55,7 @@
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/1bb139d3-342c-442e-8d75-37c77460a1ec">
 
 Formik form validation 
+
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/7ea6ab2f-db90-4cbc-b809-155989e4ba21">
  
 </div>
@@ -106,7 +107,7 @@ Formik form validation
 - [x] Replace add form shown with opacity then animate that opacity and other elements
 - [x] Host on renderer and netlify
 - [ ] Edit error screen component and add cool illustration to it
-- [ ] Add formik form validation
+- [x] Add formik form validation
 - [ ] Add image preview button while adding and editing
  
 <br>
