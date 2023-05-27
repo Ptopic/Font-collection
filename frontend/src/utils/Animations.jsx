@@ -285,9 +285,10 @@ export const openAddModalAnimation = (element) => {
 // Fly in input fields
 
 export const inputFieldsTimeline = (forwardedRef, timeline) => {
-	const ctx = gsap.context(() => {
+	gsap.context(() => {
 		timeline.current = gsap
 			.timeline()
+			.timeScale(2.4)
 			.fromTo(
 				'.id',
 				{
@@ -297,8 +298,7 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					delay: 1.4,
-					duration: 0.4,
+					delay: 0.4,
 				}
 			)
 			.fromTo(
@@ -312,7 +312,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -324,7 +323,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -338,7 +336,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -350,7 +347,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -364,7 +360,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -376,7 +371,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -390,7 +384,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -402,7 +395,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -416,7 +408,6 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			);
 	}, forwardedRef);
@@ -441,9 +432,10 @@ export const openEditModalAnimation = (element) => {
 };
 
 export const editinputFieldsTimeline = (forwardedRef, timeline) => {
-	const ctx = gsap.context(() => {
+	gsap.context(() => {
 		timeline.current = gsap
 			.timeline()
+			.timeScale(2)
 			.fromTo(
 				'.input-id',
 				{
@@ -455,7 +447,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -467,7 +458,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -481,7 +471,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -493,7 +482,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -507,7 +495,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -519,7 +506,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -533,7 +519,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -545,7 +530,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -559,7 +543,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			)
 			.fromTo(
@@ -573,7 +556,6 @@ export const editinputFieldsTimeline = (forwardedRef, timeline) => {
 					opacity: 1,
 					y: 0,
 					x: 0,
-					duration: 0.4,
 				}
 			);
 	}, forwardedRef);
