@@ -108,6 +108,7 @@
     }
 
     .navbar-mobile-content .home {
+        overflow: visible;
         position: relative;
         text-decoration: none;
         font-size: 3rem;
@@ -138,6 +139,7 @@
     }
 
     .navbar-mobile-content .manage {
+        overflow: visible;
         position: relative;
         text-decoration: none;
         font-size: 3rem;

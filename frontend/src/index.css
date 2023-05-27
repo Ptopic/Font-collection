@@ -62,4 +62,8 @@ body {
   .section-start.manage {
     padding: 5rem 0;
   }
+
+  * {
+    overflow-x: visible;
+  }
 }

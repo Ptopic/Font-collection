@@ -112,9 +112,9 @@ export const leftImageFlyIn = (el) => {
 			opacity: 1,
 			scrollTrigger: {
 				trigger: el,
-				start: 'top center',
+				start: '-=500px',
 				toggleActions: 'play none none reverse',
-				end: 'top center',
+				end: 'top',
 			},
 		}
 	);
@@ -133,9 +133,9 @@ export const rightImageFlyIn = (el) => {
 			opacity: 1,
 			scrollTrigger: {
 				trigger: el,
-				start: 'top center',
+				start: '-=500px',
 				toggleActions: 'play none none reverse',
-				end: 'top center',
+				end: 'center',
 			},
 			delay: 0.4,
 		}
