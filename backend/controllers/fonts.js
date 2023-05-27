@@ -60,6 +60,42 @@ exports.deleteFontById = async (req, res) => {
 	});
 };
 
+exports.getLatesId = async (req, res, next) => {
+	const selectFigures = `	SELECT MAX(id) AS curId FROM fonts;`;
+
+	db.query(selectFigures, async (err, result) => {
+		if (err || result.length < 1) {
+			console.log(err);
+			return res.status(400).send({
+				success: false,
+				error: 'No fonts in database',
+			});
+		} else {
+			res.locals.curId = result[0].curId;
+			next();
+		}
+	});
+};
+
+exports.checkIfFontExists = async (req, res, next) => {
+	const { id } = req.body;
+
+	const selectFigures = `SELECT * FROM fonts WHERE id = ${id}`;
+
+	const currentId = res.locals.curId;
+
+	db.query(selectFigures, async (err, result) => {
+		if (err || result.length < 1) {
+			next();
+		} else {
+			return res.status(200).send({
+				success: false,
+				data: `Font already exists pick a different id, last id is ${currentId}`,
+			});
+		}
+	});
+};
+
 exports.insertFonts = async (req, res) => {
 	const { id } = req.body;
 	const { name } = req.body;
@@ -67,6 +103,8 @@ exports.insertFonts = async (req, res) => {
 	const { image2 } = req.body;
 	const { link } = req.body;
 	const { isWide } = req.body;
+
+	console.log(id, name);
 
 	const insertQuery = `INSERT INTO fonts (id, name, image, image2, url, wide) VALUES ("${id}", '${name}', '${image}', '${image2}', '${link}', '${isWide}')`;
 
