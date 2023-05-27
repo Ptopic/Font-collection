@@ -102,6 +102,7 @@ Formik form validation
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/4bf18d00-0274-48ff-bdf7-c278bfbd0c20" width=200>
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/0080d1ba-e9d8-4c42-b1dc-140a1198926b" width=200>
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/884ad9b6-8528-4d76-a385-745ab9bb3ccf" width=200>
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/586c6f95-bf94-4afa-aeec-4103e5443ec4" width=200>
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/c43e4eca-ecb2-4dcf-a80a-0244c35a61d1" width=200>
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/aebc42ca-87c5-4688-a5e5-989b8402961c" width=200>
 
