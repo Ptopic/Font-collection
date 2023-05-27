@@ -8,6 +8,24 @@
 html,
 body {
   font-size: 10px;
+  font-family: 'ProductSansRegular', sans-serif;
+}
+
+/* Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* Product sans font */
+
+@font-face {
+  font-family: "ProductSansRegular";
+  src: local("ProductSansRegular"),
+    url("./assets/fonts/ProductSansRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "ProductSansBold";
+  src: local("ProductSansBold"),
+    url("./assets/fonts/ProductSansBold.ttf") format("truetype");
 }
 
 /* Section start */
@@ -18,12 +36,13 @@ body {
   justify-content: center;
 }
 
-.section-start.manage {
+.section-start.manage h1 {
+  font-size: 3.8rem;
   padding: 12rem 0;
 }
 
 .section-header {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
 }
 
 .container {
@@ -38,7 +57,6 @@ body {
 /* Phone */
 
 @media (max-width: 500px) {
-
   .section-start.manage {
     padding: 5rem 0;
   }

@@ -84,13 +84,15 @@ function Navbar({ forwardedRef }) {
 					opacity: opened ? 1 : 0,
 				}}
 			>
-				<Link to={`/`} className="home">
-					Home
-				</Link>
+				<div className="navbar-mobile-content">
+					<Link to={`/`} className="home">
+						Home
+					</Link>
 
-				<Link to={`/manage`} className="manage">
-					Manage
-				</Link>
+					<Link to={`/manage`} className="manage">
+						Manage
+					</Link>
+				</div>
 			</div>
 		</>
 	);
