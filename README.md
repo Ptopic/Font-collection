@@ -16,7 +16,63 @@
 
 <div align='center'>
 
-<img src="">
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/802e72af-021b-4f3b-b38d-cbaa49497ee2">
+
+</div>
+
+<br>
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/85a2b264-d828-4879-86b6-bb90b3e846aa">
+
+</div>
+
+<br>
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/75ba6781-fa13-4992-afc7-b1a1795975eb">
+
+</div>
+
+<br>
+
+## Manage screen 
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/eb128d20-69d9-408d-a9d6-0329e7a398b0">
+
+</div>
+
+<br>
+
+## Add font
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/1bb139d3-342c-442e-8d75-37c77460a1ec">
+
+</div>
+
+<br>
+
+## Edit font
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/ccd65ea4-119b-4085-bdb6-6e05dbd8e722">
+
+</div>
+
+<br>
+
+## Delete font
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/e2917e63-98cb-4035-8524-94aed3a8f32c">
 
 </div>
 
