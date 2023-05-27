@@ -82,6 +82,16 @@ Formik form validation
 
 <br>
 
+## 404 page
+
+<div align='center'>
+
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/84c5cacd-cf30-4e07-a29b-4ec647566df3">
+
+</div>
+
+<br>
+
 ## Responsiveness
 
 <div align='center'>
@@ -106,7 +116,7 @@ Formik form validation
 
 - [x] Replace add form shown with opacity then animate that opacity and other elements
 - [x] Host on renderer and netlify
-- [ ] Edit error screen component and add cool illustration to it
+- [x] Edit error screen component and add cool illustration to it
 - [x] Add formik form validation
 - [ ] Add image preview button while adding and editing
  
