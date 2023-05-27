@@ -420,6 +420,9 @@ export const inputFieldsTimeline = (forwardedRef, timeline) => {
 				}
 			);
 	}, forwardedRef);
+	return () => {
+		timeline.kill();
+	};
 };
 
 // Fly in edit input fields

@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { deleteFontById, getFontById, updateFont } from '../utils/fonts';
 
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
 import {
 	openEditModalAnimation,
 	editinputFieldsTimeline,
@@ -27,35 +30,6 @@ function DbItem({ id, name }) {
 	const [image2, setImage2] = useState('');
 	const [link, setLink] = useState('');
 	const [isWide, setIsWide] = useState(0);
-
-	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-		// Insert into db
-		console.log(isWide);
-		const res = await updateFont(
-			activeId,
-			fontName,
-			image,
-			image2,
-			link,
-			isWide
-		);
-		console.log(res);
-
-		// Close modal
-		setActiveId('');
-		setIsEdited(false);
-
-		setFontName('');
-		setImage('');
-		setImage2('');
-		setLink('');
-		setIsWide('');
-	};
-
-	const onInputChange = (state, e) => {
-		state(e.target.value);
-	};
 
 	const onCheckboxChange = (state, e) => {
 		e.preventDefault();
@@ -96,16 +70,10 @@ function DbItem({ id, name }) {
 		setIsRemoving(true);
 	};
 
-	const handleClose = () => {
+	const handleClose = (e) => {
+		e.preventDefault();
 		// Close modal
-		setActiveId('');
 		setIsEdited(false);
-
-		setFontName('');
-		setImage('');
-		setImage2('');
-		setLink('');
-		setIsWide('');
 	};
 
 	const confirmDelete = async () => {
@@ -124,6 +92,40 @@ function DbItem({ id, name }) {
 		// exit delete modal
 		setIsRemoving(false);
 	};
+
+	const onSubmitHandler = async (values, formikActions) => {
+		formikActions.setSubmitting(false);
+		// Insert into db
+		console.log(isWide);
+		const res = await updateFont(values, activeId, isWide);
+		console.log(res);
+
+		// Close modal
+		if (!res.success) {
+			formikActions.resetForm();
+		} else {
+			formikActions.resetForm();
+			setIsEdited(false);
+			navigate(0);
+		}
+	};
+
+	const initialValuse = {
+		name: fontName.toString(),
+		image: image.toString(),
+		image2: image2.toString(),
+		link: link.toString(),
+	};
+
+	const validationSchema = Yup.object({
+		name: Yup.string()
+			.max(20, 'Must be 20 characters or less')
+			.required('Required')
+			.typeError('Id must be a number'),
+		image: Yup.string().url().nullable().required('Required'),
+		image2: Yup.string().url().nullable().required('Required'),
+		link: Yup.string().url().nullable().required('Required'),
+	});
 	return (
 		<>
 			{isRemoving && (
@@ -158,68 +160,84 @@ function DbItem({ id, name }) {
 						isEdited ? 'editing-container' : 'editing-container hidden'
 					}
 				>
-					<form
-						className="content"
+					<Formik
+						initialValues={initialValuse}
+						enableReinitialize={true}
+						validationSchema={validationSchema}
 						onSubmit={onSubmitHandler}
-						ref={editFormRef}
 					>
-						<button
-							onClick={() => handleClose()}
-							className="action-button close"
-						>
-							<IoClose size={28} />
-						</button>
-						<label className="name">Font name</label>
-						<input
-							className="input-name"
-							type="text"
-							name="name"
-							defaultValue={name}
-							onChange={(e) => onInputChange(setFontName, e)}
-							autoComplete="off"
-						/>
-						{/* <img src={editingData['image']} alt="" /> */}
-						<label className="image">Font image (left)</label>
-						<input
-							className="input-image"
-							type="text"
-							name="image"
-							defaultValue={image}
-							onChange={(e) => onInputChange(setImage, e)}
-							autoComplete="off"
-						/>
-						{/* <img src={editingData['image2']} alt="" /> */}
-						<label className="image2">Font image (right)</label>
-						<input
-							className="input-image2"
-							type="text"
-							name="image2"
-							defaultValue={image2}
-							onChange={(e) => onInputChange(setImage2, e)}
-							autoComplete="off"
-						/>
-						<label className="link">Link</label>
-						<input
-							className="input-link"
-							type="text"
-							name="link"
-							defaultValue={link}
-							onChange={(e) => onInputChange(setLink, e)}
-							autoComplete="off"
-						/>
-						<div className="checkbox">
-							<button
-								className={isWide == 1 ? 'button checked' : 'button'}
-								onClick={(e) => onCheckboxChange(setIsWide, e)}
+						{(formik) => (
+							<form
+								className="content"
+								onSubmit={formik.handleSubmit}
+								ref={editFormRef}
 							>
-								{isWide == 1 ? <IoCheckmarkOutline size={24} /> : ''}
-							</button>
+								<button
+									onClick={(e) => handleClose(e)}
+									className="action-button close"
+								>
+									<IoClose size={28} />
+								</button>
+								<label className="name">Font name</label>
+								<input
+									className="input-name"
+									type="text"
+									name="name"
+									{...formik.getFieldProps('name')}
+									autoComplete="off"
+								/>
+								{formik.touched.name && formik.errors.name ? (
+									<div className="error">{formik.errors.name}</div>
+								) : null}
+								<label className="image">Font image (left)</label>
+								<input
+									className="input-image"
+									type="text"
+									name="image"
+									{...formik.getFieldProps('image')}
+									autoComplete="off"
+								/>
+								{formik.touched.image && formik.errors.image ? (
+									<div className="error">{formik.errors.image}</div>
+								) : null}
+								<label className="image2">Font image (right)</label>
+								<input
+									className="input-image2"
+									type="text"
+									name="image2"
+									{...formik.getFieldProps('image2')}
+									autoComplete="off"
+								/>
+								{formik.touched.image2 && formik.errors.image2 ? (
+									<div className="error">{formik.errors.image2}</div>
+								) : null}
+								<label className="link">Link</label>
+								<input
+									className="input-link"
+									type="text"
+									name="link"
+									{...formik.getFieldProps('link')}
+									autoComplete="off"
+								/>
+								{formik.touched.link && formik.errors.link ? (
+									<div className="error">{formik.errors.link}</div>
+								) : null}
 
-							<label>Is wide</label>
-						</div>
+								<div className="checkbox">
+									<button
+										className={isWide == 1 ? 'button checked' : 'button'}
+										onClick={(e) => onCheckboxChange(setIsWide, e)}
+									>
+										{isWide == 1 ? <IoCheckmarkOutline size={24} /> : ''}
+									</button>
 
-						<input type="submit" value="Submit" />
-					</form>
+									<label>Is wide</label>
+								</div>
+
+								<input type="submit" value="Submit" />
+							</form>
+						)}
+					</Formik>
 				</div>
 			</div>
 

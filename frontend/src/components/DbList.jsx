@@ -8,6 +8,9 @@ import { getFonts, insertFont } from '../utils/fonts';
 
 import Spinner from './Spinner';
 
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
 // Animations
 import {
 	dbListHeaderAnimation,
@@ -28,13 +31,9 @@ function DbList({ forwardedRef }) {
 	const [data, setData] = useState([]);
 	const [addingData, setAddingData] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const [idVal, setIdVal] = useState(1);
 
-	const [id, setId] = useState('');
-	const [fontName, setFontName] = useState('');
-	const [image, setImage] = useState('');
-	const [image2, setImage2] = useState('');
-	const [link, setLink] = useState('');
-	const [isWide, setIsWide] = useState(0);
+	const [insertError, setInsertError] = useState('');
 
 	const getData = async () => {
 		setIsLoading(true);
@@ -47,22 +46,6 @@ function DbList({ forwardedRef }) {
 	const closeModalAndReset = () => {
 		// Close modal
 		setAddingData(false);
-
-		setId('');
-		setFontName('');
-		setImage('');
-		setImage2('');
-		setLink('');
-		setIsWide(0);
-	};
-
-	const autoIdIncrement = () => {
-		if (data) {
-			let curId = data.length + 1;
-			setId(curId);
-		} else {
-			setId(1);
-		}
 	};
 
 	useEffect(() => {
@@ -76,12 +59,17 @@ function DbList({ forwardedRef }) {
 		dbListAnimation();
 	}, [data]);
 
-	const onInputChange = (state, e) => {
-		state(e.target.value);
-	};
-
 	const handleClose = () => {
 		closeModalAndReset();
+	};
+
+	const autoIdIncrement = () => {
+		if (data) {
+			let curId = data.length + 1;
+			setIdVal(curId);
+		} else {
+			setIdVal(1);
+		}
 	};
 
 	const handleAdd = async () => {
@@ -93,14 +81,38 @@ function DbList({ forwardedRef }) {
 		autoIdIncrement();
 	};
 
-	const onHandleSubmit = async (e) => {
-		e.preventDefault();
+	const onHandleSubmit = async (values, formikActions) => {
+		formikActions.setSubmitting(false);
 		// Insert into db
-		const res = await insertFont(id, fontName, image, image2, link, isWide);
-		console.log(res);
-		closeModalAndReset();
-		navigate(0);
+		const res = await insertFont(values);
+		if (!res.success) {
+			setInsertError(res.data);
+			formikActions.resetForm();
+		} else {
+			setInsertError();
+			formikActions.resetForm();
+			navigate(0);
+		}
 	};
+
+	const initialValuse = {
+		id: idVal,
+		name: '',
+		image: '',
+		image2: '',
+		link: '',
+	};
+
+	const validationSchema = Yup.object({
+		id: Yup.number().required().positive().integer().required('Required'),
+		name: Yup.string()
+			.max(20, 'Must be 20 characters or less')
+			.required('Required')
+			.typeError('Id must be a number'),
+		image: Yup.string().url().nullable().required('Required'),
+		image2: Yup.string().url().nullable().required('Required'),
+		link: Yup.string().url().nullable().required('Required'),
+	});
 	return (
 		<>
 			<div
@@ -116,67 +128,93 @@ function DbList({ forwardedRef }) {
 					}
 					ref={addMenuRef}
 				>
-					<form className="content" onSubmit={onHandleSubmit} ref={addFormRef}>
-						<button
-							type="button"
-							onClick={() => handleClose()}
-							className="action-button close"
-						>
-							<IoClose size={28} />
-						</button>
-						<div className="adding-header">
-							<p>Add font</p>
-						</div>
-						<label className="id">Id</label>
-						<input
-							className="input-id"
-							type="text"
-							name="id"
-							defaultValue={id}
-							onChange={(e) => onInputChange(setId, e)}
-							autoComplete="off"
-						/>
-						<label className="name">Font name</label>
-						<input
-							className="input-name"
-							type="text"
-							name="name"
-							defaultValue={name}
-							onChange={(e) => onInputChange(setFontName, e)}
-							autoComplete="off"
-						/>
-						{/* <img src={editingData['image']} alt="" /> */}
-						<label className="image">Font image (left)</label>
-						<input
-							className="input-image"
-							type="text"
-							name="image"
-							defaultValue={image}
-							onChange={(e) => onInputChange(setImage, e)}
-							autoComplete="off"
-						/>
-						{/* <img src={editingData['image2']} alt="" /> */}
-						<label className="image2">Font image (right)</label>
-						<input
-							className="input-image2"
-							type="text"
-							name="image2"
-							defaultValue={image2}
-							onChange={(e) => onInputChange(setImage2, e)}
-							autoComplete="off"
-						/>
-						<label className="link">Link</label>
-						<input
-							className="input-link"
-							type="text"
-							name="link"
-							defaultValue={link}
-							onChange={(e) => onInputChange(setLink, e)}
-							autoComplete="off"
-						/>
+					<Formik
+						initialValues={initialValuse}
+						enableReinitialize={true}
+						validationSchema={validationSchema}
+						onSubmit={onHandleSubmit}
+					>
+						{(formik) => (
+							<form
+								className="content"
+								onSubmit={formik.handleSubmit}
+								ref={addFormRef}
+							>
+								<button
+									type="button"
+									onClick={() => handleClose()}
+									className="action-button close"
+								>
+									<IoClose size={28} />
+								</button>
+								<div className="adding-header">
+									<p>Add font</p>
+								</div>
 
-						<input type="submit" value="Submit" />
-					</form>
+								{insertError ? (
+									<div className="error">{insertError}</div>
+								) : null}
+								<label className="id">Id</label>
+								<input
+									className="input-id"
+									type="text"
+									name="id"
+									autoComplete="off"
+									{...formik.getFieldProps('id')}
+								/>
+								{formik.touched.id && formik.errors.id ? (
+									<div className="error">{formik.errors.id}</div>
+								) : null}
+
+								<label className="name">Font name</label>
+								<input
+									className="input-name"
+									type="text"
+									name="name"
+									autoComplete="off"
+									{...formik.getFieldProps('name')}
+								/>
+								{formik.touched.name && formik.errors.name ? (
+									<div className="error">{formik.errors.name}</div>
+								) : null}
+								<label className="image">Font image (left)</label>
+								<input
+									className="input-image"
+									type="text"
+									name="image"
+									autoComplete="off"
+									{...formik.getFieldProps('image')}
+								/>
+								{formik.touched.image && formik.errors.image ? (
+									<div className="error">{formik.errors.image}</div>
+								) : null}
+								<label className="image2">Font image (right)</label>
+								<input
+									className="input-image2"
+									type="text"
+									name="image2"
+									autoComplete="off"
+									{...formik.getFieldProps('image2')}
+								/>
+								{formik.touched.image2 && formik.errors.image2 ? (
+									<div className="error">{formik.errors.image2}</div>
+								) : null}
+								<label className="link">Link</label>
+								<input
+									className="input-link"
+									type="text"
+									name="link"
+									autoComplete="off"
+									{...formik.getFieldProps('link')}
+								/>
+								{formik.touched.link && formik.errors.link ? (
+									<div className="error">{formik.errors.link}</div>
+								) : null}
+
+								<input type="submit" value="Submit" />
+							</form>
+						)}
+					</Formik>
 				</div>
 			</div>
 

@@ -39,32 +39,27 @@ export const getFonts = async () => {
 	}
 };
 
-export const updateFont = async (id, name, image, image2, link, wide) => {
+export const updateFont = async (values, id, wide) => {
 	try {
+		console.log(values);
 		const { data } = await client.post('/fonts/update-font', {
 			id,
-			name,
-			image,
-			image2,
-			link,
+			...values,
 			wide,
 		});
+		console.log(data);
 		return data;
 	} catch (error) {
 		return catchError(error);
 	}
 };
 
-export const insertFont = async (id, name, image, image2, link, wide) => {
+export const insertFont = async (values) => {
 	try {
 		const { data } = await client.post('/fonts/insert-font', {
-			id,
-			name,
-			image,
-			image2,
-			link,
-			wide,
+			...values,
 		});
+		console.log(data);
 		return data;
 	} catch (error) {
 		return catchError(error);
