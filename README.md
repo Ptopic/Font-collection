@@ -54,6 +54,9 @@
 
 <img src="https://github.com/Ptopic/Font-collection/assets/45322112/1bb139d3-342c-442e-8d75-37c77460a1ec">
 
+Formik form validation 
+<img src="https://github.com/Ptopic/Font-collection/assets/45322112/7ea6ab2f-db90-4cbc-b809-155989e4ba21">
+ 
 </div>
 
 <br>
