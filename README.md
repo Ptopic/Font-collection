@@ -1,5 +1,3 @@
-<div align='center'><img style="width:20%"></div>
-
 <h2>Font collection tracking app</h2>
 
 👉 Live Demo: <a href='https://www.fontcollection.org'>Live Demo</a>
